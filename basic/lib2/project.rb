@@ -1,5 +1,5 @@
 cxx_configuration do
-  if Utils::OS.linux?
+  if Cxxproject::Utils::OS.linux?
     deps = ['1'] + bin_libs(:z, :dl)
   else
     deps = ['1'] + bin_libs(:z)

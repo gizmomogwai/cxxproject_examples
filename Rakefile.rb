@@ -1,10 +1,10 @@
 projects = ['frazzle',
             'cxxproject',
+            'cxx',
             'cxxproject_gcctoolchain',
             'cxxproject_clangtoolchain',
             'cxxproject_clanganalyzer',
             'cxxproject_stats',
-            'rubydsl',
             'cxxproject_console',
             'cxxproject_valgrind']
 
@@ -16,22 +16,26 @@ task :clean do
     end
   end
 end
-desc 'build all projects'
-task :build do
-  projects.each do |p|
-    cd "../#{p}" do
-      sh 'rake package'
-    end
-  end
+
+desc 'install prerequisites for build'
+task :wipe_gems do
+  sh "rvm --force gemset empty"
 end
 
 desc 'install all built gems'
-task :install_gems => :build do
-  sh "gem install #{FileList[projects.map{|p|"../#{p}/pkg/*.gem"}].join(' ')}"
+task :build_and_install_gems do
+  projects.each do |p|
+    cd "../#{p}" do
+      sh 'rake package'
+      sh 'rake install'
+    end
+  end
+
+#  sh "gem install #{FileList[projects.map{|p|"../#{p}/pkg/*.gem"}].join(' ')}"
 end
 
 desc 'pushes all gems to rubygems'
-task :push_gems => :build do
+task :push_gems => :build_and_install_gems do
   ok = []
   failed = []
   FileList[projects.map{|p|"../#{p}/pkg/*.gem"}].each do |gem|
@@ -48,4 +52,4 @@ task :push_gems => :build do
   puts "Failed to push gems    :\n  #{failed.join("\n  ")}"
 end
 
-task :default => :install_gems
+task :default => :build_and_install_gems

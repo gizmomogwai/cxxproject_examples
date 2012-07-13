@@ -6,6 +6,7 @@ GEM
       diff-lcs (~> 1.1)
       mime-types (~> 1.15)
       posix-spawn (~> 0.3.6)
+    haml (3.1.6)
     mime-types (1.19)
     posix-spawn (0.3.6)
     roodi (2.1.0)
@@ -27,6 +28,7 @@ PLATFORMS
 
 DEPENDENCIES
   grit
+  haml
   mime-types
   posix-spawn
   roodi
