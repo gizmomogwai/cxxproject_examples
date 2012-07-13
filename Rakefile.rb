@@ -3,13 +3,14 @@ projects = ['frazzle',
             'cxxproject_gcctoolchain',
             'cxxproject_clangtoolchain',
             'cxxproject_clanganalyzer',
+            'cxxproject_stats',
             'rubydsl',
             'cxxproject_console',
             'cxxproject_valgrind']
 
 desc 'cleanup all built gems'
 task :clean do
-  project.each do |p|
+  projects.each do |p|
     cd "../#{p}" do
       sh 'rake clobber_package'
     end

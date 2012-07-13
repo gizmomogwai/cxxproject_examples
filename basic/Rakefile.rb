@@ -1,6 +1,6 @@
 require 'rubydsl/rubydsl'
 
-projects_to_rake(['basic/project.rb','lib1/project.rb','lib2/project.rb'] , "build", 'clang', ".")
+projects_to_rake(['basic/project.rb','lib1/project.rb','lib2/project.rb'] , 'out', 'clang', ".")
 # CxxProject2Rake.new(['basic/project.rb','lib1/project.rb','lib2/project.rb'] , "build", "clang", ".") do
 #   p "calling block..."
 #   unittest_flags = {
