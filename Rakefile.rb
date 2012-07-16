@@ -26,6 +26,7 @@ desc 'install all built gems'
 task :build_and_install_gems do
   projects.each do |p|
     cd "../#{p}" do
+      sh 'rm -rf pkg'
       sh 'rake package'
       sh 'rake install'
     end
