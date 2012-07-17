@@ -44,7 +44,7 @@ task :bump do
   end
 end
 
-desc 'pushes all gems to rubygems'
+desc 'pushes all gems to rubygems and bumps afterwards to be safe'
 task :push_gems => :build_and_install_gems do
   ok = []
   failed = []
@@ -52,6 +52,7 @@ task :push_gems => :build_and_install_gems do
     begin
       sh "gem push #{gem}"
       ok << gem
+      sh 'gem bump'
     rescue Exception => e
       puts "problems with pushing gem #{gem}:"
       puts e
@@ -60,15 +61,6 @@ task :push_gems => :build_and_install_gems do
   end
   puts "Sucessfully pushed gems:\n  #{ok.join("\n  ")}"
   puts "Failed to push gems    :\n  #{failed.join("\n  ")}"
-end
-
-desc 'pushes gems and ups version after this to be on the safe side'
-task :push_and_bump => [:push_gems] do
-  projects.each do |p|
-    cd "../#{p}" do
-      sh 'gem bump'
-    end
-  end
 end
 
 task :default => :build_and_install_gems
