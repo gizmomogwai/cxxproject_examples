@@ -35,6 +35,15 @@ task :build_and_install_gems do
 #  sh "gem install #{FileList[projects.map{|p|"../#{p}/pkg/*.gem"}].join(' ')}"
 end
 
+desc 'bump allgems'
+task :bump do
+  projects.each do |p|
+    cd "../#{p}" do
+      sh 'gem bump'
+    end
+  end
+end
+
 desc 'pushes all gems to rubygems'
 task :push_gems => :build_and_install_gems do
   ok = []
@@ -51,6 +60,15 @@ task :push_gems => :build_and_install_gems do
   end
   puts "Sucessfully pushed gems:\n  #{ok.join("\n  ")}"
   puts "Failed to push gems    :\n  #{failed.join("\n  ")}"
+end
+
+desc 'pushes gems and ups version after this to be on the safe side'
+task :push_and_bump => [:push_gems] do
+  projects.each do |p|
+    cd "../#{p}" do
+      sh 'gem bump'
+    end
+  end
 end
 
 task :default => :build_and_install_gems
