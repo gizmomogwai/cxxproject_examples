@@ -1,3 +1,3 @@
 require 'cxx'
 
-cxx(Dir['**/project.rb'] , 'out', 'g++', '.')
+cxx(Dir['**/project.rb'] , 'out', 'gcc', '.')
