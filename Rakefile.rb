@@ -44,23 +44,51 @@ task :bump do
   end
 end
 
-desc 'pushes all gems to rubygems and bumps afterwards to be safe'
-task :push_gems => :build_and_install_gems do
-  ok = []
-  failed = []
-  FileList[projects.map{|p|"../#{p}/pkg/*.gem"}].each do |gem|
-    begin
-      sh "gem push #{gem}"
-      ok << gem
-      sh 'gem bump'
-    rescue Exception => e
-      puts "problems with pushing gem #{gem}:"
-      puts e
-      failed << gem
+desc 'show all versions'
+task :show_versions do
+  projects.each do |p|
+    cd "../#{p}", :verbose => false do
+      require 'gem_release'
+      version = GemRelease::VersionFile::new
+      puts "#{p} has version #{version.old_number}"
     end
   end
-  puts "Sucessfully pushed gems:\n  #{ok.join("\n  ")}"
-  puts "Failed to push gems    :\n  #{failed.join("\n  ")}"
+end
+
+desc 'pushes all gems to rubygems and bumps afterwards to be safe'
+task :push_gems, [:what] => [:build_and_install_gems] do |t,args|
+  projects_to_do = projects
+  projects_to_do = [args.what] if args.what
+  ok = ['']
+  failed = ['']
+  projects_to_do.each do |p|
+    cd "../#{p}" do
+      begin
+        sh "gem push #{gem}"
+        ok << p
+        require 'gem_release'
+        version = GemRelease::VersionFile.new
+        sh "git tag #{version.old_number}"
+        sh "gem bump"
+      rescue Exception => e
+        failed << p
+        puts "Problems with gem #{p}"
+        puts e
+      end
+    end
+  end
+  puts "---------------------------"
+  puts "RESULTS"
+  puts "---------------------------"
+  puts "Sucessfully pushed gems:#{ok.join("\n  ")}"
+  puts "Failed to push gems    :#{failed.join("\n  ")}"
 end
 
 task :default => :build_and_install_gems
+
+task :test do |t, args|
+  p args
+  cd '../cxxproject' do
+    sh 'gem bump'
+  end
+end
