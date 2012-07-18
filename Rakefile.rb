@@ -64,11 +64,11 @@ task :push_gems, [:what] => [:build_and_install_gems] do |t,args|
   projects_to_do.each do |p|
     cd "../#{p}" do
       begin
-        sh "gem push #{gem}"
-        ok << p
         require 'gem_release'
-        version = GemRelease::VersionFile.new
-        sh "git tag #{version.old_number}"
+        version = GemRelease::VersionFile.new.old_number
+        sh "gem push pkg/#{p}-#{version}.gem"
+        ok << p
+        sh "git tag #{version}"
         sh "gem bump"
       rescue Exception => e
         failed << p
