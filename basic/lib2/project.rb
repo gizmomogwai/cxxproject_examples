@@ -8,8 +8,8 @@ cxx_configuration do
   source_lib "2",
     :sources => FileList['**/*.cpp'],
     :dependencies => deps,
-    :includes => ['.']
-
+    :includes => ['.'],
+    :whole_archive => true
 
   unittest_flags = {
     :DEFINES => ['UNIT_TEST','CPPUNIT_MAIN="main"']
