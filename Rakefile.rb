@@ -82,6 +82,10 @@ task :push_gems, [:what] => [:build_and_install_gems] do |t,args|
   puts "---------------------------"
   puts "Sucessfully pushed gems:#{ok.join("\n  ")}"
   puts "Failed to push gems    :#{failed.join("\n  ")}"
+  if failed.size == 0
+    puts "pushing tags"
+    sh "repo forall -c git push --tags"
+  end
 end
 
 task :default => :build_and_install_gems
