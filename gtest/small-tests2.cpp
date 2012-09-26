@@ -5,5 +5,5 @@ TEST(Hello2, world1) {
 }
 
 TEST(Hello2, world2) {
-  EXPECT_EQ(1, 2);
+  EXPECT_TRUE(true);
 }

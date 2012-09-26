@@ -25,7 +25,8 @@ end
 desc 'reinstall all gems into gemset'
 task :reinstall_gems => :wipe_gems do
   Needed_Gems = [
-    'rspec'
+    'rspec',
+    'bundler'
     # 'mime-types',
     # 'posix-spawn'
     # 'grit',
