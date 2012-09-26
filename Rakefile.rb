@@ -12,7 +12,7 @@ desc 'cleanup all built gems'
 task :clean do
   projects.each do |p|
     cd "../#{p}" do
-      sh 'rake clobber_package'
+      sh 'rm -rf pkg'
     end
   end
 end
@@ -20,6 +20,24 @@ end
 desc 'install prerequisites for build'
 task :wipe_gems do
   sh "rvm --force gemset empty"
+end
+
+desc 'reinstall all gems into gemset'
+task :reinstall_gems => :wipe_gems do
+  Needed_Gems = [
+    'rspec'
+    # 'mime-types',
+    # 'posix-spawn'
+    # 'grit',
+    # 'sexp_processor',
+    # 'ruby_parser',
+    # 'roodi',
+    # 'haml',
+    # 'gem-release'
+  ]
+  Needed_Gems.each do |g|
+    sh "gem install #{g}"
+  end
 end
 
 desc 'install all built gems'
@@ -34,6 +52,10 @@ task :build_and_install_gems do
 
 #  sh "gem install #{FileList[projects.map{|p|"../#{p}/pkg/*.gem"}].join(' ')}"
 end
+
+desc 'setup environment'
+task :environment => [:reinstall_gems, :clean, :build_and_install_gems]
+
 
 desc 'bump allgems'
 task :bump do
