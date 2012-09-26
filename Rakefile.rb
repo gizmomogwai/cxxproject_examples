@@ -26,7 +26,8 @@ desc 'reinstall all gems into gemset'
 task :reinstall_gems => :wipe_gems do
   Needed_Gems = [
     'rspec',
-    'bundler'
+    'bundler',
+    'builder' # for junit report on buildserver
     # 'mime-types',
     # 'posix-spawn'
     # 'grit',
