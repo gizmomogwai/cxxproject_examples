@@ -9,7 +9,7 @@ cxx_configuration do
     :sources => FileList['**/*.cpp'],
     :dependencies => deps,
     :includes => ['.'],
-    :whole_archive => true
+    :whole_archive => false
 
   unittest_flags = {
     :DEFINES => ['UNIT_TEST','CPPUNIT_MAIN="main"']

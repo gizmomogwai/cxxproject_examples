@@ -2,11 +2,15 @@ projects = ['frazzle',
             'cxxproject',
             'cxx',
             'cxxproject_gcctoolchain',
-            'cxxproject_clangtoolchain',
-            'cxxproject_clanganalyzer',
+#            'cxxproject_clangtoolchain',
+#            'cxxproject_rpitoolchain',
+#            'cxxproject_fsltoolchain',
+#            'cxxproject_clanganalyzer',
             'cxxproject_stats',
+            'cxxproject_tomake',
             'cxxproject_console',
-            'cxxproject_valgrind']
+            'cxxproject_valgrind',
+            'cxxproject_gcov']
 
 desc 'cleanup all built gems'
 task :clean do
