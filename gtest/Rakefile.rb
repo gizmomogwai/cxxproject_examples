@@ -1,7 +1,7 @@
 require 'cxx'
 
 flags = {
-  :FLAGS => ['-coverage']
+  :FLAGS => ['--coverage']
 }
 
 cxx(Dir['**/project.rb'] , 'out', 'gcc', '.') do
@@ -10,4 +10,6 @@ cxx(Dir['**/project.rb'] , 'out', 'gcc', '.') do
   Provider.modify_linker("gcc", flags)
 end
 
+Gcov.excludes << '.*fused-src.*'
+Gcov.excludes << '/usr.*'
 
