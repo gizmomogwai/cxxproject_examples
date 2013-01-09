@@ -2,7 +2,7 @@ cxx_configuration do
   source_lib 'small-tests',
     :sources => ['small-tests.cpp'],
     :dependencies => ['gtest', 'lib1'],
-    :whole_archive => true
+    :whole_archive => false
 
   source_lib 'small-tests2',
     :sources => ['small-tests2.cpp'],

@@ -4,12 +4,16 @@ flags = {
   :FLAGS => ['--coverage']
 }
 
-cxx(Dir['**/project.rb'] , 'out', 'gcc', '.') do
-  Provider.modify_compiler("gcc", :C, flags)
-  Provider.modify_compiler("gcc", :CPP, flags)
-  Provider.modify_linker("gcc", flags)
+cxx(Dir['**/project.rb'] , 'out', 'gcc', '.') do |tc|
+  tc[:COMPILER][:C].update(flags)
+  tc[:COMPILER][:CPP].update(flags)
+  tc[:LINKER].update(flags)
 end
 
 Gcov.excludes << '.*fused-src.*'
 Gcov.excludes << '/usr.*'
 
+desc 'cleanup gcov files'
+task :clean_gcov do
+  sh 'find . -name "*.gc??" -delete'
+end
