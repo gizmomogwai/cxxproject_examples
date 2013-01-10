@@ -124,3 +124,13 @@ task :test do |t, args|
     sh 'gem bump'
   end
 end
+
+to_github = ['cxxproject', 'cxx', 'cxxproject_gcctoolchain']
+desc "upload #{to_github.join(', ')} to github default:master"
+task :to_github do
+  to_github.each do |p|
+    cd "../#{p}" do
+      sh 'git push github default:master'
+    end
+  end
+end
