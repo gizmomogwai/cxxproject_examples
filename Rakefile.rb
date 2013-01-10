@@ -125,16 +125,6 @@ task :test do |t, args|
   end
 end
 
-to_github = ['cxxproject', 'cxx', 'cxxproject_gcctoolchain']
-desc "upload #{to_github.join(', ')} to github default:master"
-task :to_github do
-  to_github.each do |p|
-    cd "../#{p}" do
-      sh 'git push github default:master'
-    end
-  end
-end
-
 desc 'prepare for acceptance tests'
 task :prepare_accept => [:environment]
 
