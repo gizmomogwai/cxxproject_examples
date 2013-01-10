@@ -134,3 +134,16 @@ task :to_github do
     end
   end
 end
+
+desc 'prepare for acceptance tests'
+task :prepare_accept => [:environment]
+
+desc 'acceptance tests'
+task :accept do
+  cd 'basic' do
+    sh 'rake run:filter'
+  end
+  cd 'gtest' do
+    sh 'rake run:filter'
+  end
+end
