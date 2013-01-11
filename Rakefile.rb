@@ -131,9 +131,9 @@ task :prepare_accept => [:environment]
 desc 'acceptance tests'
 task :accept do
   cd 'basic' do
-    sh 'rake run:filter'
+    sh 'rake clean run:filter'
   end
   cd 'gtest' do
-    sh 'rake run:filter'
+    sh 'rake clean run:filter'
   end
 end
