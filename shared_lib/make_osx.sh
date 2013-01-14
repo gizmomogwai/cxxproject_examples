@@ -6,6 +6,8 @@
 #http://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
 mkdir -p out/libs
 g++ -c lib1.cpp -o out/lib1.o
+g++ -c lib2.cpp -o out/lib2.o
 g++ -dynamiclib -o out/libs/liblib1.dylib -install_name @executable_path/libs/liblib1.dylib out/lib1.o
+g++ -dynamiclib -o out/libs/liblib2.dylib -install_name @executable_path/libs/liblib2.dylib out/lib2.o out/libs/liblib1.dylib
 g++ -c main.cpp -o out/main.o
-g++ -o out/main.exe out/main.o out/libs/liblib1.dylib
+g++ -o out/main.exe out/main.o out/libs/liblib1.dylib out/libs/liblib2.dylib
