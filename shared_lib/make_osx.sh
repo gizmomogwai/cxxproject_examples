@@ -4,8 +4,9 @@
 #http://blog.zyxar.com/tag/executable_path
 #https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath
 #http://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
-major=1
-minor=2
+major=A
+minor=1.0.1
+compatibility=1.0.0
 mkdir -p out/libs
 
 #Without major/minor
@@ -14,12 +15,11 @@ g++ -dynamiclib -o out/libs/libfoo.dylib -install_name @executable_path/libs/lib
 
 #With major/minor
 g++ -c bar.cpp -o out/bar.o
-g++ -dynamiclib -o out/libs/libbar.dylib -install_name @executable_path/libs/libbar.dylib out/bar.o -compatibility_version 1 -current_version 1.2 out/libs/libfoo.dylib
+g++ -dynamiclib -o out/libs/libbar.$major.dylib -install_name @executable_path/libs/libbar.$major.dylib out/bar.o -compatibility_version $compatibility -current_version $minor out/libs/libfoo.dylib
 pushd out/libs
-ln -s libbar.$major.$minor.dylib libbar.dylib
-ln -s libbar.$major.$minor.dylib libbar.$major.dylib
+ln -s libbar.$major.dylib libbar.dylib
 popd
 
 #Executable
 g++ -c main.cpp -o out/main.o
-g++ -o out/main.exe out/main.o out/libs/libfoo.dylib out/libs/libbar.dylib
+g++ -o out/main out/main.o -lfoo -lbar -Lout/libs/

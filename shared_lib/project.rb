@@ -3,9 +3,11 @@ cxx_configuration do
         :sources => ['foo.cpp']
   
   bar = shared_lib 'bar',
-        :major => 1,
-        :minor => 2,
-        :sources => ['bar.cpp']
+        :major => 'A',
+        :minor => '1.0.2',
+        :compatibility => '1.0.1',
+        :sources => ['bar.cpp'],
+        :dependencies => ['foo']
   
   exe 'main',
     :sources => ['main.cpp'],
