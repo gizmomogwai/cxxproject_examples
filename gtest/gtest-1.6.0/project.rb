@@ -3,12 +3,12 @@ cxx_configuration do
   libs << 'rt' if OS.linux?
   bin_libs(libs)
 
-  source_lib 'gtest',
+  static_lib 'gtest',
     :sources => FileList['fused-src/gtest/gtest-all.cc'],
     :includes => ['fused-src'],
     :dependencies => libs
 
-  source_lib 'gtest_main',
+  static_lib 'gtest_main',
     :sources => FileList['fused-src/gtest/gtest_main.cc'],
     :dependencies => ['gtest']
 
