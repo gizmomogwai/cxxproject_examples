@@ -1,11 +1,11 @@
 
 
 
-#include "lib1.h"
-#include "lib2.h"
+#include "foo.h"
+#include "bar.h"
 
 int main(int argc, char** args) {
-  lib1();
-  lib2();
+  foo();
+  bar();
   return 0;
 }
