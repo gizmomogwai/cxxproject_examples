@@ -26,8 +26,9 @@ end
 
 task :reinstall_gems => :wipe_gems do
   Needed_Gems = [
+    'rake',
     'rspec',
-    'bundler',
+    'bundler --version \'= 1.2.5\'',
     'builder' # for junit report on buildserver
     # 'mime-types',
     # 'posix-spawn'
