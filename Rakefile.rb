@@ -2,10 +2,10 @@ projects = ['frazzle',
             'cxxproject',
             'cxx',
             'cxxproject_gcctoolchain',
-#            'cxxproject_clangtoolchain',
+            'cxxproject_clangtoolchain',
 #            'cxxproject_rpitoolchain',
 #            'cxxproject_fsltoolchain',
-#            'cxxproject_clanganalyzer',
+            'cxxproject_clanganalyzer',
             'cxxproject_stats',
             'cxxproject_tomake',
             'cxxproject_console',
@@ -127,10 +127,19 @@ task :prepare_accept => [:environment]
 
 desc 'acceptance tests'
 task :accept do
+
   cd 'basic' do
-    sh 'rake clean run:filter'
+    sh 'rake -f Rakefile.gcc.rb clean run:filter'
+  end
+  cd 'basic' do
+    sh 'rake -f Rakefile.clang.rb clean run:filter'
+  end
+
+  cd 'gtest' do
+    sh 'rake -f Rakefile.gcc.rb clean run:filter'
   end
   cd 'gtest' do
-    sh 'rake clean run:filter'
+    sh 'rake -f Rakefile.clang.rb clean run:filter'
   end
+
 end
