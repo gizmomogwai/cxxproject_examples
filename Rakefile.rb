@@ -3,7 +3,7 @@ projects = ['frazzle',
             'cxx',
             'cxxproject_gcctoolchain',
             'cxxproject_clangtoolchain',
-#            'cxxproject_rpitoolchain',
+            'cxxproject_rpitoolchain',
 #            'cxxproject_fsltoolchain',
             'cxxproject_clanganalyzer',
             'cxxproject_stats',
@@ -127,19 +127,15 @@ task :prepare_accept => [:environment]
 
 desc 'acceptance tests'
 task :accept do
-
-  cd 'basic' do
-    sh 'rake -f Rakefile.gcc.rb clean run:filter'
+  ['basic', 'gtest', 'shared_lib'].each do |project|
+    ['gcc', 'clang', 'rpi'].each do |tc|
+      cd project do
+        command = 'run:filter'
+        if tc == 'rpi'
+          command = 'exe:filter'
+        end
+        sh "rake -f Rakefile.#{tc}.rb clean #{command}"
+      end
+    end
   end
-  cd 'basic' do
-    sh 'rake -f Rakefile.clang.rb clean run:filter'
-  end
-
-  cd 'gtest' do
-    sh 'rake -f Rakefile.gcc.rb clean run:filter'
-  end
-  cd 'gtest' do
-    sh 'rake -f Rakefile.clang.rb clean run:filter'
-  end
-
 end

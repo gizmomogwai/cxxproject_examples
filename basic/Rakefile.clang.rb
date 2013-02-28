@@ -1,2 +1,2 @@
 require 'cxx'
-cxx(Dir['**/project.rb'] , 'out', 'clang', '.')
+cxx(Dir['**/project.rb'] , 'out/clang', 'clang', '.')

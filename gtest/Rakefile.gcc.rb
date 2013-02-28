@@ -4,7 +4,7 @@ flags = {
   :FLAGS => ['--coverage']
 }
 
-cxx(Dir['**/project.rb'] , 'out', 'gcc', '.') do |tc|
+cxx(Dir['**/project.rb'] , 'out/gcc', 'gcc', '.') do |tc|
   tc[:COMPILER][:C].update(flags)
   tc[:COMPILER][:CPP].update(flags)
   tc[:LINKER].update(flags)

@@ -1,8 +1,8 @@
 cxx_configuration do
   if Cxxproject::Utils::OS.linux?
-    deps = ['1'] + bin_libs([:z, :dl])
+    deps = ['1'] + bin_libs([:dl])
   else
-    deps = ['1'] + bin_libs([:z])
+    deps = ['1'] + bin_libs([])
   end
 
   static_lib "2",
@@ -11,12 +11,8 @@ cxx_configuration do
     :includes => ['.'],
     :whole_archive => false
 
-  unittest_flags = {
-    :DEFINES => ['UNIT_TEST','CPPUNIT_MAIN="main"']
-  }
   static_lib "2_debug",
     :sources => FileList['**/*.cpp'],
     :dependencies => deps,
-    :includes => ['.'],
-    :toolchain => Provider.modify_cpp_compiler('gcc', unittest_flags)
+    :includes => ['.']
 end
