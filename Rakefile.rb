@@ -1,9 +1,10 @@
+
 projects = ['frazzle',
             'cxxproject',
             'cxx',
             'cxxproject_gcctoolchain',
             'cxxproject_clangtoolchain',
-            'cxxproject_rpitoolchain',
+#            'cxxproject_rpitoolchain',
 #            'cxxproject_fsltoolchain',
             'cxxproject_clanganalyzer',
             'cxxproject_stats',
@@ -128,7 +129,11 @@ task :prepare_accept => [:environment]
 desc 'acceptance tests'
 task :accept do
   ['basic', 'gtest', 'shared_lib'].each do |project|
-    ['gcc', 'clang', 'rpi'].each do |tc|
+    [
+     'gcc', 
+     'clang', 
+    # 'rpi'
+    ].each do |tc|
       cd project do
         command = 'run:filter'
         if tc == 'rpi'
