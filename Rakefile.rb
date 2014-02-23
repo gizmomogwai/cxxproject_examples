@@ -12,7 +12,6 @@ projects = ['frazzle',
             'cxxproject_valgrind',
             'cxxproject_gcov']
 
-desc 'cleanup all built gems'
 task :clean do
   projects.each do |p|
     cd "../#{p}" do
@@ -21,12 +20,10 @@ task :clean do
   end
 end
 
-desc 'install prerequisites for build'
 task :wipe_gems do
   sh "rvm --force gemset empty"
 end
 
-desc 'reinstall all gems into gemset'
 task :reinstall_gems => :wipe_gems do
   Needed_Gems = [
     'rspec',
@@ -46,7 +43,6 @@ task :reinstall_gems => :wipe_gems do
   end
 end
 
-desc 'install all built gems'
 task :build_and_install_gems do
   projects.each do |p|
     cd "../#{p}" do
